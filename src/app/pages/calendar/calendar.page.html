@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Calendário</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2>Calendário de Tarefas</h2>
+  <ion-list>
+    <ion-item *ngFor="let tarefa of tarefas">
+      <ion-label>
+        <div>
+          <span>{{ tarefa.titulo }}</span> <br />
+          <small>{{ tarefa.dataLimite | date:'dd/MM/yyyy' }}</small>
+        </div>
+      </ion-label>
+      <ion-button slot="end" fill="clear" (click)="abrirTarefa(tarefa.id)">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-note *ngIf="tarefas.length === 0">Sem tarefas para mostrar.</ion-note>
+</ion-content>

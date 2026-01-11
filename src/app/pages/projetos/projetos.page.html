@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Projetos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2>Projetos</h2>
+  <ion-list>
+    <div *ngFor="let proj of projetos">
+      <!-- Modo visualização -->
+      <ion-item *ngIf="editandoId !== proj.id" lines="full">
+        <ion-label>
+          <strong>{{ proj.nome }}</strong> <br>
+          <small>Categoria: {{ categoriaNome(proj.categoriaId) }}</small>
+        </ion-label>
+        <ion-button slot="end" fill="clear" color="primary" size="small" (click)="iniciarEditar(proj)">
+          <ion-icon name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" fill="clear" color="danger" size="small" (click)="remover(proj.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      
+      <!-- Modo edição -->
+      <ion-card *ngIf="editandoId === proj.id" class="ion-margin-vertical">
+        <ion-card-content>
+          <ion-item>
+            <ion-label position="stacked">Nome do Projeto</ion-label>
+            <ion-input [(ngModel)]="nomeEdit" placeholder="Nome do projeto"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Categoria</ion-label>
+            <ion-select [(ngModel)]="catIdEdit" placeholder="Selecione categoria" [compareWith]="compareWith" [disabled]="categorias.length === 0">
+              <ion-select-option *ngFor="let cat of categorias; trackBy: trackByCategoria" [value]="cat.id">
+                {{ cat.nome }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-note *ngIf="categorias.length === 0" color="warning" class="ion-margin-start">
+            A carregar categorias... Vá primeiro à página de Categorias.
+          </ion-note>
+          <div class="ion-margin-top" style="display: flex; gap: 10px; justify-content: flex-end;">
+            <ion-button fill="outline" color="medium" (click)="cancelarEdicao()">
+              <ion-icon name="close-outline" slot="start"></ion-icon>
+              Cancelar
+            </ion-button>
+            <ion-button color="success" (click)="guardarEdicao()">
+              <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+              Guardar
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-list>
+  <form (ngSubmit)="adicionar()" #projForm="ngForm">
+    <ion-item class="ion-margin-top">
+      <ion-input placeholder="Nome do Projeto" [(ngModel)]="nomeProjeto" name="nomeProjeto" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Categoria</ion-label>
+      <ion-select placeholder="Categoria" [(ngModel)]="categoriaId" name="categoriaId" [compareWith]="compareWith" [disabled]="categorias.length === 0" required>
+        <ion-select-option *ngFor="let cat of categorias; trackBy: trackByCategoria" [value]="cat.id">
+          {{ cat.nome }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-note *ngIf="categorias.length === 0" color="warning" class="ion-margin-start">
+      A carregar categorias... Vá primeiro à página de Categorias para criar categorias.
+    </ion-note>
+    <ion-button expand="block" color="primary" type="submit" [disabled]="projForm.invalid">Adicionar Projeto</ion-button>
+  </form>
+</ion-content>

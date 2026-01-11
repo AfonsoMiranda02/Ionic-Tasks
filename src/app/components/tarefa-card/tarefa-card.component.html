@@ -1,0 +1,28 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>{{ titulo }}</ion-card-title>
+    <ion-note>Pendentes</ion-note> </ion-card-header>
+
+  <ion-reorder-group [disabled]="false" (ionItemReorder)="doReorder($event)">
+    <ion-item *ngFor="let item of tarefas" [color]="estaEmAtraso(item) ? 'danger' : ''">
+      <ion-label>
+        <h2>{{ item.titulo }}</h2>
+        <p>{{ item.descricao }}</p>
+        <p *ngIf="item.dataLimite">
+          <small>Data limite: {{ item.dataLimite | date:'dd/MM/yyyy' }}</small>
+        </p>
+        <ion-badge *ngIf="estaEmAtraso(item)" color="danger">Em Atraso</ion-badge>
+      </ion-label>
+
+      <ion-button fill="clear" (click)="editar(item.id)">
+        <ion-icon name="create-outline" slot="icon-only" color="primary"></ion-icon>
+      </ion-button>
+      
+      <ion-button fill="clear" (click)="eliminar(item.id)">
+        <ion-icon name="trash-outline" slot="icon-only" color="danger"></ion-icon>
+      </ion-button>
+
+      <ion-reorder slot="end"></ion-reorder>
+    </ion-item>
+  </ion-reorder-group>
+</ion-card>

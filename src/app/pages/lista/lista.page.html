@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Gestor de Tarefas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  
+  <app-tarefa-card 
+    titulo="Tarefas To Do" 
+    [tarefas]="toDo" 
+    (onEditar)="navegarParaEditar($event)"
+    (onEliminar)="eliminarTarefa($event)">
+  </app-tarefa-card>
+
+  <app-tarefa-card 
+    titulo="In Progress" 
+    [tarefas]="inProgress" 
+    (onEditar)="navegarParaEditar($event)"
+    (onEliminar)="eliminarTarefa($event)">
+  </app-tarefa-card>
+
+  <app-tarefa-card 
+    titulo="Done" 
+    [tarefas]="done" 
+    (onEditar)="navegarParaEditar($event)"
+    (onEliminar)="eliminarTarefa($event)">
+  </app-tarefa-card>
+
+  <ion-button expand="block" color="primary" (click)="navegarParaEditar(0)" class="ion-margin-top" [disabled]="projetos.length === 0">
+    <ion-icon name="add-outline" slot="start"></ion-icon>
+    Nova Tarefa
+  </ion-button>
+  
+  <ion-note *ngIf="projetos.length === 0" color="warning" class="ion-margin-top">
+    <p>É necessário criar pelo menos um projeto antes de criar tarefas.</p>
+    <ion-button fill="clear" size="small" routerLink="/projetos">
+      Criar Projeto
+    </ion-button>
+  </ion-note>
+
+  <ion-button expand="block" fill="clear" (click)="irParaHome()">
+    Sair da Lista (Router)
+  </ion-button>
+
+</ion-content>

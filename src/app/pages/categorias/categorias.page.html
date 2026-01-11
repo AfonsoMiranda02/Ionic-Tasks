@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Categorias</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2>Categorias</h2>
+
+  <ion-list>
+    <ion-item *ngFor="let cat of categorias">
+      <ion-label *ngIf="editandoId !== cat.id">{{ cat.nome }}</ion-label>
+      <ion-input *ngIf="editandoId === cat.id" [(ngModel)]="nomeEdit"></ion-input>
+      <ion-button slot="end" fill="clear" color="primary" size="small" *ngIf="editandoId !== cat.id" (click)="iniciarEditar(cat)">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" fill="clear" color="success" size="small" *ngIf="editandoId === cat.id" (click)="guardarEdicao()">
+        <ion-icon name="checkmark-outline"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" fill="clear" color="medium" size="small" *ngIf="editandoId === cat.id" (click)="cancelarEdicao()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" fill="clear" color="danger" size="small" (click)="remover(cat.id)">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <form (ngSubmit)="adicionar()" #catForm="ngForm">
+    <ion-item class="ion-margin-top">
+      <ion-input placeholder="Nova Categoria" [(ngModel)]="novaCategoria" name="novaCategoria" required></ion-input>
+    </ion-item>
+    <ion-button expand="block" color="primary" type="submit" [disabled]="catForm.invalid">Adicionar</ion-button>
+  </form>
+</ion-content>

@@ -25,3 +25,14 @@
 #container a {
   text-decoration: none;
 }
+
+ion-toolbar {
+  --background: #3880ff;
+  --color: white;
+  
+  ion-title {
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+}

@@ -45,17 +45,19 @@ yarn-error.log
 *.sublime-workspace
 
 # Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode/
 .history/*
 
+# Capacitor platforms
+android/
+ios/
 
 # Miscellaneous
 /.angular
 /.angular/cache
+
+# Markdown files (excluir do commit)
+*.md
 .sass-cache/
 /.nx
 /.nx/cache

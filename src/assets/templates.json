@@ -1,0 +1,9 @@
+{
+  "categorias": [
+    { "id": 1, "nome": "Escola" },
+    { "id": 2, "nome": "Trabalho" },
+    { "id": 3, "nome": "Pessoal" }
+  ],
+  "projetos": [],
+  "tarefas": []
+}

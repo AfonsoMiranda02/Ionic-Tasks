@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Editar Tarefa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item *ngIf="projetos.length === 0" color="warning">
+    <ion-label>
+      <h2>Sem Projetos</h2>
+      <p>É necessário criar pelo menos um projeto antes de criar tarefas.</p>
+      <ion-button fill="clear" routerLink="/projetos" class="ion-margin-top">
+        Criar Projeto
+      </ion-button>
+    </ion-label>
+  </ion-item>
+
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <ion-item>
+    <ion-label position="stacked">Projeto</ion-label>
+    <ion-select ngModel name="projetoId" required [(ngModel)]="tarefa.projetoId" interface="action-sheet" [disabled]="projetos.length === 0">
+      <ion-select-option *ngFor="let proj of projetos" [value]="proj.id">{{ proj.nome }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Título</ion-label>
+    <ion-input required name="titulo" [(ngModel)]="tarefa.titulo" placeholder="Título da tarefa"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Descrição</ion-label>
+    <ion-textarea name="descricao" [(ngModel)]="tarefa.descricao" placeholder="Descrição da tarefa"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Data Limite</ion-label>
+    <ion-datetime
+      name="dataLimite"
+      display-format="DD/MM/YYYY"
+      [(ngModel)]="tarefa.dataLimite"
+      required
+      presentation="date"></ion-datetime>
+  </ion-item>
+  <ion-item lines="none">
+    <ion-label>Concluída</ion-label>
+    <ion-checkbox slot="end" [(ngModel)]="tarefa.concluida" name="concluida"></ion-checkbox>
+  </ion-item>
+  <ion-button expand="block" (click)="takePicture()" class="ion-margin-top" type="button">
+    <ion-icon name="camera-outline" slot="start"></ion-icon>
+    ADICIONAR FOTO
+  </ion-button>
+  <div *ngIf="photo" class="ion-margin-top ion-text-center">
+    <ion-img [src]="photo" style="border-radius: 10px; max-height: 200px;"></ion-img>
+  </div>
+  <ion-button expand="block" color="success" [disabled]="form.invalid || projetos.length === 0" type="submit" class="ion-margin-top">
+    GUARDAR
+  </ion-button>
+</form>
+</ion-content>
